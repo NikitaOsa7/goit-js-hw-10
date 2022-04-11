@@ -12,12 +12,12 @@ const DEBOUNCE_DELAY = 300;
 countryList.style.listStyleType = "none";
 countryList.style.padding = "0";
 
-searchBox.addEventListener("input", debounce((evt) => {
-    evt.preventDefault();
+searchBox.addEventListener("input", debounce((event) => {
+    event.preventDefault();
     countryList.innerHTML = '';
     countryInfo.innerHTML = '';
 
-    const persistedSearch = evt.target.value.trim();
+    const persistedSearch = event.target.value.trim();
     if (persistedSearch !== "") {
         API.fetchCountries(persistedSearch)
         .then(renderCountry)
