@@ -12,12 +12,12 @@ const DEBOUNCE_DELAY = 300;
 countryList.style.listStyleType = "none";
 countryList.style.padding = "0";
 
-searchBox.addEventListener("input", debounce((event) => {
-    event.preventDefault();
+searchBox.addEventListener("input", debounce((evt) => {
+    evt.preventDefault();
     countryList.innerHTML = '';
     countryInfo.innerHTML = '';
 
-    const persistedSearch = event.target.value.trim();
+    const persistedSearch = evt.target.value.trim();
     if (persistedSearch !== "") {
         API.fetchCountries(persistedSearch)
         .then(renderCountry)
@@ -34,10 +34,10 @@ function renderCountry(country) {
             const markup = country
                 .sort((firstCountry, SecondCountry) => firstCountry.name.common.localeCompare(SecondCountry.name.common))
                 .map(({ flags, name }) => `<li style="display: flex; align-items: center; margin: 5px 0"><img src="${flags.svg}" width="30">&nbsp;&nbsp;${name.common}</li>`).join('');
-            countryList.insertAdjacentElementHTML("afterbegin", markup);
+            countryList.insertAdjacentHTML("afterbegin", markup);
         } else {
             renderInfo(country[0]);
-            function renderInfo({ name, population, flags, languages, capital }) {
+            function renderInfo({name, capital, population, flags, languages}) {
                 const markup = `<p style="font-weight: bold; font-size: 38px; display: flex; align-items: center;"><img src="${flags.svg}" width="30">&nbsp;${name.common}</p>
             <p><b>Capital:</b> ${capital}</p>
             <p><b>Population:</b> ${population}</p>
